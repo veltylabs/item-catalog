@@ -1,7 +1,7 @@
 package itemcatalog
 
 import (
-	"github.com/tinywasm/fmt"
+	"webtyp.com/fmt"
 )
 
 type CanonicalSpecialty struct {

@@ -1,13 +1,13 @@
 package itemcatalog
 
 import (
-	"github.com/tinywasm/ddl"
-	"github.com/tinywasm/events"
-	"github.com/tinywasm/fmt"
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/orm"
-	"github.com/tinywasm/router"
-	"github.com/tinywasm/time"
+	"webtyp.com/ddl"
+	"webtyp.com/events"
+	"webtyp.com/fmt"
+	"webtyp.com/model"
+	"webtyp.com/orm"
+	"webtyp.com/router"
+	"webtyp.com/time"
 )
 
 var ErrNotFound = fmt.Err("item not found")

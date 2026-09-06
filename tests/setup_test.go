@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"github.com/tinywasm/events"
-	"github.com/tinywasm/fmt"
+	"webtyp.com/events"
+	"webtyp.com/fmt"
 )
 
 type MockPublisher struct {

@@ -7,8 +7,8 @@ Unified catalog of services and products. Designed for the Velty ecosystem.
 
 ```go
 import (
-	"github.com/tinywasm/orm"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/orm"
+	"webtyp.com/storage/mem"
 	itemcatalog "github.com/veltylabs/item_catalog"
 )
 
