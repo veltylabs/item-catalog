@@ -2,6 +2,8 @@
 PLAN: "refactor!: migrate github.com/tinywasm -> webtyp.com + adopt view.NewCallerLister"
 EXECUTOR: jules
 REVIEWER: none
+STATUS: running
+SESSION: 12321908989595835112
 ---
 
 > This plan is dispatched via the CodeJob workflow. See skill: agents-workflow.
