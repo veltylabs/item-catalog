@@ -3,9 +3,9 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/view"
-	"github.com/tinywasm/view/conformance"
-	"github.com/tinywasm/view/mock"
+	"webtyp.com/view"
+	"webtyp.com/view/conformance"
+	"webtyp.com/view/mock"
 )
 
 func TestConformance(t *testing.T) {

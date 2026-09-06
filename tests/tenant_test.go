@@ -3,8 +3,8 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/orm"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/orm"
+	"webtyp.com/storage/mem"
 	itemcatalog "github.com/veltylabs/item_catalog"
 )
 

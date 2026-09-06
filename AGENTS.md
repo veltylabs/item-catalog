@@ -7,7 +7,7 @@ turns out to be wrong for a module, the fix belongs here (and replicates outward
 exception in one module's copy.
 
 Master plan (cross-repo status, whitelist rationale, dispatch order):
-[`app-releases/docs/REUSABLE_MODULES_MASTER_PLAN.md`](https://github.com/tinywasm/app/blob/main/docs/REUSABLE_MODULES_MASTER_PLAN.md).
+[`app-releases/docs/REUSABLE_MODULES_MASTER_PLAN.md`](https://github.com/webtyp/app/blob/main/docs/REUSABLE_MODULES_MASTER_PLAN.md).
 Reference implementation (the pattern every module replicates): `github.com/veltylabs/item_catalog`.
 
 ## Mission of a `veltylabs/modules/*` repo
@@ -19,7 +19,7 @@ renderer it has never seen, chosen by whichever app composes it.
 
 ## The whitelist — what a module may import
 
-A module's **non-test** Go files may import, from `github.com/tinywasm/*`:
+A module's **non-test** Go files may import, from `webtyp.com/*`:
 
 | Package | Role | Why it's a port, not a concrete dependency |
 |---|---|---|
@@ -44,7 +44,7 @@ calls `orm.New(conn)`. A module importing them does **not** know or care which b
 
 - **Any concrete storage backend**: `tinywasm/sqlite`, `tinywasm/sqlt`, `tinywasm/postgres`,
   `tinywasm/indexdb`, or any `database/sql` driver. A module's own tests exercise
-  `storage/mem` (`github.com/tinywasm/storage/mem`) via `orm.New(mem.New())` — the in-memory
+  `storage/mem` (`webtyp.com/storage/mem`) via `orm.New(mem.New())` — the in-memory
   reference backend built for exactly this. **Not even in `_test.go` files** — a concrete driver
   pulled in "just for tests" is still a dependency the module ships, and it is exactly the coupling
   this whitelist exists to prevent. Backend integration tests belong to the composition-root app
@@ -74,15 +74,15 @@ calls `orm.New(conn)`. A module importing them does **not** know or care which b
 
 ## The stdlib boundary
 
-`github.com/tinywasm/fmt` **is** the stdlib replacement for this ecosystem: nothing in it, and
-nothing built on it, imports `fmt`, `strings`, `strconv`, or `errors` — `tinywasm/fmt` already
+`webtyp.com/fmt` **is** the stdlib replacement for this ecosystem: nothing in it, and
+nothing built on it, imports `fmt`, `strings`, `strconv`, or `errors` — `webtyp.com/fmt` already
 provides string manipulation, number conversion, and error construction (`fmt.Err(...)`),
 reflection-free and TinyGo-sized. A module targets `wasm`/TinyGo first, so it follows the same rule:
 
-- **Banned, use the tinywasm replacement instead:** `errors`, `strings`, `strconv`, stdlib `fmt` →
-  `github.com/tinywasm/fmt`. `encoding/json` → `model.Encodable`/`Decodable` (the module never
-  chooses the concrete encoder; in tests, use `"github.com/tinywasm/json"` for codec verification, standard library `"encoding/json"` is strictly banned everywhere). `database/sql` → `orm`/`storage`. `net/http` → `router`. `time` →
-  `github.com/tinywasm/time`.
+- **Banned, use the webtyp replacement instead:** `errors`, `strings`, `strconv`, stdlib `fmt` →
+  `webtyp.com/fmt`. `encoding/json` → `model.Encodable`/`Decodable` (the module never
+  chooses the concrete encoder; in tests, use `"webtyp.com/json"` for codec verification, standard library `"encoding/json"` is strictly banned everywhere). `database/sql` → `orm`/`storage`. `net/http` → `router`. `time` →
+  `webtyp.com/time`.
 - **Fine to use directly:** anything that isn't a contract this ecosystem already replaces —
   `testing`, `sort`, `context` (stdlib, when it's genuinely cancellation/deadlines, not the
   transport-level `tinywasm/context`), etc. When in doubt: if `tinywasm/fmt` (or another package in
@@ -102,7 +102,7 @@ reflection-free and TinyGo-sized. A module targets `wasm`/TinyGo first, so it fo
   constructs a generator.
 - **Persistence**: `New(db *orm.DB, deps Deps)` receives an already-connected `*orm.DB` (backed by
   whatever `storage.Conn` the app chose) and owns its own schema migration via
-  `github.com/tinywasm/ddl`, replacing the removed `orm.DB.CreateTable`. `ddl.New` takes **two**
+  `webtyp.com/ddl`, replacing the removed `orm.DB.CreateTable`. `ddl.New` takes **two**
   arguments — `ddl.New(conn storage.Conn, ddlCompiler ddl.Compiler)` — and `ddl.Compiler` is a
   capability only SQL backends (`sqlt`, `postgres`) implement; the in-memory test backend
   (`storage/mem`) does not, because it creates tables lazily on first `Exec` and needs no DDL at all.
@@ -136,7 +136,7 @@ reflection-free and TinyGo-sized. A module targets `wasm`/TinyGo first, so it fo
 ## Testing
 
 - Runner: `gotest`, never `go test` directly (once installed via
-  `go install github.com/tinywasm/devflow/cmd/gotest@latest`).
+  `go install github.com/webtyp/devflow/cmd/gotest@latest`).
 - A module's own tests build its `*orm.DB` over `storage/mem` (`orm.New(mem.New())`), drive
   `MountOps` against `router/mock` (satisfies `router.OpRegistry`), and exercise the `view.Presenter`
   against `view/conformance`'s `FakeCaller` or a hand-rolled fake `router.Caller` — never a concrete

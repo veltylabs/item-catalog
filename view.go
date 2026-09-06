@@ -1,10 +1,13 @@
 package itemcatalog
 
 import (
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/router"
-	"github.com/tinywasm/view"
+	"webtyp.com/model"
+	"webtyp.com/router"
+	"webtyp.com/view"
 )
+
+const titleCatalog = "Catálogo"
+const titleSpecialties = "Especialidades"
 
 // Item projects a CatalogItem as a view.Item — the ONLY view-specific code this record
 // carries (view.Itemizer). The Presenter's internal index (built from this on Reload)
@@ -22,30 +25,16 @@ func (s *Specialty) Item() view.Item {
 // or any other) wraps. It is THIS module's job to build it (importing only view+model+router);
 // the app decides which renderer draws it.
 func NewView(caller router.Caller) view.Presenter {
-	record := &CatalogItem{}
-
-	return view.New(
-		caller,
-		record,
-		OpListItems,
-		func() model.ModelSlice { return &CatalogItemList{} },
-		view.WithTitle("Catálogo"),
-		view.WithSaveOp(OpUpsertItem),
-		view.WithDeleteOp(OpDeleteItem),
-	)
+	b := view.NewCallerLister(caller,
+		view.Ops{List: OpListItems, Save: OpUpsertItem, Delete: OpDeleteItem},
+		func() model.ModelSlice { return &CatalogItemList{} })
+	return view.New(b, &CatalogItem{}, view.WithTitle(titleCatalog))
 }
 
 // NewSpecialtyView builds the specialty Presenter.
 func NewSpecialtyView(caller router.Caller) view.Presenter {
-	record := &Specialty{}
-
-	return view.New(
-		caller,
-		record,
-		OpListSpecialties,
-		func() model.ModelSlice { return &SpecialtyList{} },
-		view.WithTitle("Especialidades"),
-		view.WithSaveOp(OpUpsertSpecialty),
-		view.WithDeleteOp(OpDeleteSpecialty),
-	)
+	b := view.NewCallerLister(caller,
+		view.Ops{List: OpListSpecialties, Save: OpUpsertSpecialty, Delete: OpDeleteSpecialty},
+		func() model.ModelSlice { return &SpecialtyList{} })
+	return view.New(b, &Specialty{}, view.WithTitle(titleSpecialties))
 }
