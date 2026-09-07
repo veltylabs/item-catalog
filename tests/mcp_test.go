@@ -35,7 +35,7 @@ func TestMCPOperations(t *testing.T) {
 			return true
 		},
 	})
-	module.MountOps(r)
+	module.MountOperations(r)
 
 	tenantID := "tenant-1"
 
@@ -345,7 +345,7 @@ func TestMCPOperationsErrorPaths(t *testing.T) {
 			return true
 		},
 	})
-	module.MountOps(r)
+	module.MountOperations(r)
 
 	// Decode error path
 	ctxErr := &mock.Context{

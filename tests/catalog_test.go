@@ -461,7 +461,7 @@ func TestAgreements(t *testing.T) {
 	}
 }
 
-func TestModule_MountOpsAndView(t *testing.T) {
+func TestModule_MountOperationsAndView(t *testing.T) {
 	db := orm.New(mem.New())
 	pub := &MockPublisher{}
 	module, err := itemcatalog.New(db, itemcatalog.Deps{IDs: &MockIDGen{}, Publisher: pub})
@@ -470,7 +470,7 @@ func TestModule_MountOpsAndView(t *testing.T) {
 	}
 
 	r := &mock.Router{}
-	module.MountOps(r)
+	module.MountOperations(r)
 
 	infos := r.Routes()
 	var found bool
@@ -483,7 +483,7 @@ func TestModule_MountOpsAndView(t *testing.T) {
 		}
 	}
 	if !found {
-		t.Fatalf("MountOps did not register %s", itemcatalog.OpUpsertItem)
+		t.Fatalf("MountOperations did not register %s", itemcatalog.OpUpsertItem)
 	}
 
 	caller := &mock.Caller{}
