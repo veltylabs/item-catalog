@@ -1,7 +1,6 @@
 package itemcatalog
 
 import (
-	"webtyp.com/ddl"
 	"webtyp.com/events"
 	"webtyp.com/fmt"
 	"webtyp.com/model"
@@ -72,17 +71,6 @@ type Module struct {
 func New(db *orm.DB, deps Deps) (*Module, error) {
 	if deps.IDs == nil {
 		return nil, fmt.Err("item_catalog: Deps.IDs is required")
-	}
-	if ddlCompiler, ok := db.RawConn().(ddl.Compiler); ok {
-		if err := ddl.New(db.RawConn(), ddlCompiler).CreateTable(&Specialty{}); err != nil {
-			return nil, err
-		}
-		if err := ddl.New(db.RawConn(), ddlCompiler).CreateTable(&CatalogItem{}); err != nil {
-			return nil, err
-		}
-		if err := ddl.New(db.RawConn(), ddlCompiler).CreateTable(&Agreement{}); err != nil {
-			return nil, err
-		}
 	}
 	return &Module{db: db, ids: deps.IDs, pub: deps.Publisher}, nil
 }

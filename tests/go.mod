@@ -5,7 +5,7 @@ go 1.25.2
 replace github.com/veltylabs/item_catalog => ../
 
 require (
-	github.com/veltylabs/item_catalog v0.3.4
+	github.com/veltylabs/item_catalog v0.3.5
 	webtyp.com/events v0.0.3
 	webtyp.com/fmt v1.0.0
 	webtyp.com/form v0.4.7
@@ -18,7 +18,6 @@ require (
 )
 
 require (
-	webtyp.com/ddl v0.0.15 // indirect
 	webtyp.com/dom v0.13.10 // indirect
 	webtyp.com/input v0.0.6 // indirect
 	webtyp.com/time v0.5.5 // indirect

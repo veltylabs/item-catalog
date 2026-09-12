@@ -100,24 +100,39 @@ reflection-free and TinyGo-sized. A module targets `wasm`/TinyGo first, so it fo
 
 - **Identity**: `Deps.IDs model.IDGenerator`, required. The module calls `m.ids.NewID()`; it never
   constructs a generator.
-- **Persistence**: `New(db *orm.DB, deps Deps)` receives an already-connected `*orm.DB` (backed by
-  whatever `storage.Conn` the app chose) and owns its own schema migration via
-  `webtyp.com/ddl`, replacing the removed `orm.DB.CreateTable`. `ddl.New` takes **two**
-  arguments — `ddl.New(conn storage.Conn, ddlCompiler ddl.Compiler)` — and `ddl.Compiler` is a
-  capability only SQL backends (`sqlt`, `postgres`) implement; the in-memory test backend
-  (`storage/mem`) does not, because it creates tables lazily on first `Exec` and needs no DDL at all.
-  So the module type-asserts for the capability instead of assuming it (the same idiom
-  `storage.TxExecutor` already uses for optional transactions):
+- **Persistence**: `New(db *orm.DB, deps Deps)` receives an already-connected
+  `*orm.DB` and assumes its schema already exists — it never creates or
+  alters tables, and never imports `webtyp.com/ddl`. Schema reconciliation
+  lives in its own **subpackage**, `<module>/migrate` (`package migrate`),
+  exporting `Migrate(conn ddl.Execer, ddlCompiler ddl.Compiler) error`.
+  Deliberately not called by `New`, and deliberately not in the module's
+  root package: schema work is deploy-time work, run once from a migration
+  binary (`cmd/migrate` in the composition-root app) — and keeping it in a
+  separate package means nothing on a WASM build's import path (`view.go`,
+  `init.go`, the root package itself) ever pulls `webtyp.com/ddl` into that
+  binary, regardless of build tags.
   ```go
-  if ddlCompiler, ok := db.RawConn().(ddl.Compiler); ok {
-      if err := ddl.New(db.RawConn(), ddlCompiler).CreateTable(&CatalogItem{}); err != nil {
-          return nil, err
+  // migrate/migrate.go
+  package migrate
+
+  import (
+      "webtyp.com/ddl"
+
+      thismodule "github.com/veltylabs/<this-module>"
+  )
+
+  func Migrate(conn ddl.Execer, ddlCompiler ddl.Compiler) error {
+      d := ddl.New(conn, ddlCompiler)
+      if err := d.CreateTable(&thismodule.CatalogItem{}); err != nil {
+          return err
       }
+      return nil
   }
   ```
-  Against `storage/mem` (module tests) this is a no-op — nothing to create. Against a real SQL
-  backend it migrates the schema, exactly like the old `orm.DB.CreateTable` did. The module never
-  receives a raw connection string or picks a driver.
+  A module's own tests build `*orm.DB` over `storage/mem`
+  (`orm.New(mem.New())`), which creates tables lazily on first `Exec` — they
+  never call `Migrate`, and `New` never needs to type-assert for
+  `ddl.Compiler` at all anymore.
 - **Transport**: the module implements `router.OpModule` — `ModelName() string` +
   `MountOps(reg router.OpRegistry)`, registering each operation with `.Requires(resource, action)`
   and `.Accepts(&ArgsType{})`. It never implements `router.APIModule`/`Router`, and never sees
