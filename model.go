@@ -21,27 +21,14 @@ var (
 	BaseInt_FieldInt   = model.Int()
 )
 
-type catalogItemType struct {
-	input.Base
-}
-
-func (c *catalogItemType) Clone(parentID, name string) input.Input {
-	clone := *c
-	clone.InitBase(parentID, name, "radio")
-	return &clone
-}
-
+// itemType: closed-options radio widget for the `type` field. input.Radio
+// takes the option list directly (webtyp.com/input v0.0.7+), so this no
+// longer needs its own input.Base-embedding type + Clone().
 func itemType() input.Input {
-	t := &catalogItemType{}
-	t.Letters = true
-	t.Numbers = true
-	t.Minimum = 1
-	t.InitBase("", "", "radio")
-	t.SetOptions(
+	return input.Radio(
 		fmt.KeyValue{Key: ItemTypeService, Value: "Service"},
 		fmt.KeyValue{Key: ItemTypeProduct, Value: "Product"},
 	)
-	return t
 }
 
 var SpecialtyModel = model.Definition{
