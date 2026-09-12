@@ -53,8 +53,6 @@ func (m *Specialty) DecodeFields(r model.FieldReader) {
 
 type SpecialtyList []*Specialty
 
-func (s *SpecialtyList) Schema() []model.Field { return nil }
-func (s *SpecialtyList) Pointers() []any     { return nil }
 func (s *SpecialtyList) Len() int             { return len(*s) }
 func (s *SpecialtyList) At(i int) model.Fielder { return (*s)[i] }
 func (s *SpecialtyList) Append() model.Fielder  { v := &Specialty{}; *s = append(*s, v); return v }
@@ -157,8 +155,6 @@ func (m *CatalogItem) DecodeFields(r model.FieldReader) {
 
 type CatalogItemList []*CatalogItem
 
-func (s *CatalogItemList) Schema() []model.Field { return nil }
-func (s *CatalogItemList) Pointers() []any     { return nil }
 func (s *CatalogItemList) Len() int             { return len(*s) }
 func (s *CatalogItemList) At(i int) model.Fielder { return (*s)[i] }
 func (s *CatalogItemList) Append() model.Fielder  { v := &CatalogItem{}; *s = append(*s, v); return v }
@@ -262,8 +258,6 @@ func (m *Agreement) DecodeFields(r model.FieldReader) {
 
 type AgreementList []*Agreement
 
-func (s *AgreementList) Schema() []model.Field { return nil }
-func (s *AgreementList) Pointers() []any     { return nil }
 func (s *AgreementList) Len() int             { return len(*s) }
 func (s *AgreementList) At(i int) model.Fielder { return (*s)[i] }
 func (s *AgreementList) Append() model.Fielder  { v := &Agreement{}; *s = append(*s, v); return v }
@@ -352,8 +346,6 @@ func (m *ItemFilter) DecodeFields(r model.FieldReader) {
 
 type ItemFilterList []*ItemFilter
 
-func (s *ItemFilterList) Schema() []model.Field { return nil }
-func (s *ItemFilterList) Pointers() []any     { return nil }
 func (s *ItemFilterList) Len() int             { return len(*s) }
 func (s *ItemFilterList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ItemFilterList) Append() model.Fielder  { v := &ItemFilter{}; *s = append(*s, v); return v }
@@ -398,8 +390,6 @@ func (m *ListItemsArgs) DecodeFields(r model.FieldReader) {
 
 type ListItemsArgsList []*ListItemsArgs
 
-func (s *ListItemsArgsList) Schema() []model.Field { return nil }
-func (s *ListItemsArgsList) Pointers() []any     { return nil }
 func (s *ListItemsArgsList) Len() int             { return len(*s) }
 func (s *ListItemsArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ListItemsArgsList) Append() model.Fielder  { v := &ListItemsArgs{}; *s = append(*s, v); return v }
@@ -432,8 +422,6 @@ func (m *GetItemArgs) DecodeFields(r model.FieldReader) {
 
 type GetItemArgsList []*GetItemArgs
 
-func (s *GetItemArgsList) Schema() []model.Field { return nil }
-func (s *GetItemArgsList) Pointers() []any     { return nil }
 func (s *GetItemArgsList) Len() int             { return len(*s) }
 func (s *GetItemArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *GetItemArgsList) Append() model.Fielder  { v := &GetItemArgs{}; *s = append(*s, v); return v }
@@ -466,8 +454,6 @@ func (m *FindBySKUArgs) DecodeFields(r model.FieldReader) {
 
 type FindBySKUArgsList []*FindBySKUArgs
 
-func (s *FindBySKUArgsList) Schema() []model.Field { return nil }
-func (s *FindBySKUArgsList) Pointers() []any     { return nil }
 func (s *FindBySKUArgsList) Len() int             { return len(*s) }
 func (s *FindBySKUArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *FindBySKUArgsList) Append() model.Fielder  { v := &FindBySKUArgs{}; *s = append(*s, v); return v }
@@ -500,8 +486,6 @@ func (m *DeactivateItemArgs) DecodeFields(r model.FieldReader) {
 
 type DeactivateItemArgsList []*DeactivateItemArgs
 
-func (s *DeactivateItemArgsList) Schema() []model.Field { return nil }
-func (s *DeactivateItemArgsList) Pointers() []any     { return nil }
 func (s *DeactivateItemArgsList) Len() int             { return len(*s) }
 func (s *DeactivateItemArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *DeactivateItemArgsList) Append() model.Fielder  { v := &DeactivateItemArgs{}; *s = append(*s, v); return v }
@@ -534,8 +518,6 @@ func (m *DeleteItemArgs) DecodeFields(r model.FieldReader) {
 
 type DeleteItemArgsList []*DeleteItemArgs
 
-func (s *DeleteItemArgsList) Schema() []model.Field { return nil }
-func (s *DeleteItemArgsList) Pointers() []any     { return nil }
 func (s *DeleteItemArgsList) Len() int             { return len(*s) }
 func (s *DeleteItemArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *DeleteItemArgsList) Append() model.Fielder  { v := &DeleteItemArgs{}; *s = append(*s, v); return v }
@@ -568,8 +550,6 @@ func (m *ListAgreementsArgs) DecodeFields(r model.FieldReader) {
 
 type ListAgreementsArgsList []*ListAgreementsArgs
 
-func (s *ListAgreementsArgsList) Schema() []model.Field { return nil }
-func (s *ListAgreementsArgsList) Pointers() []any     { return nil }
 func (s *ListAgreementsArgsList) Len() int             { return len(*s) }
 func (s *ListAgreementsArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ListAgreementsArgsList) Append() model.Fielder  { v := &ListAgreementsArgs{}; *s = append(*s, v); return v }
@@ -602,8 +582,6 @@ func (m *DeleteAgreementArgs) DecodeFields(r model.FieldReader) {
 
 type DeleteAgreementArgsList []*DeleteAgreementArgs
 
-func (s *DeleteAgreementArgsList) Schema() []model.Field { return nil }
-func (s *DeleteAgreementArgsList) Pointers() []any     { return nil }
 func (s *DeleteAgreementArgsList) Len() int             { return len(*s) }
 func (s *DeleteAgreementArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *DeleteAgreementArgsList) Append() model.Fielder  { v := &DeleteAgreementArgs{}; *s = append(*s, v); return v }
@@ -633,8 +611,6 @@ func (m *ListSpecialtiesArgs) DecodeFields(r model.FieldReader) {
 
 type ListSpecialtiesArgsList []*ListSpecialtiesArgs
 
-func (s *ListSpecialtiesArgsList) Schema() []model.Field { return nil }
-func (s *ListSpecialtiesArgsList) Pointers() []any     { return nil }
 func (s *ListSpecialtiesArgsList) Len() int             { return len(*s) }
 func (s *ListSpecialtiesArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *ListSpecialtiesArgsList) Append() model.Fielder  { v := &ListSpecialtiesArgs{}; *s = append(*s, v); return v }
@@ -667,8 +643,6 @@ func (m *GetSpecialtyArgs) DecodeFields(r model.FieldReader) {
 
 type GetSpecialtyArgsList []*GetSpecialtyArgs
 
-func (s *GetSpecialtyArgsList) Schema() []model.Field { return nil }
-func (s *GetSpecialtyArgsList) Pointers() []any     { return nil }
 func (s *GetSpecialtyArgsList) Len() int             { return len(*s) }
 func (s *GetSpecialtyArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *GetSpecialtyArgsList) Append() model.Fielder  { v := &GetSpecialtyArgs{}; *s = append(*s, v); return v }
@@ -701,8 +675,6 @@ func (m *DeleteSpecialtyArgs) DecodeFields(r model.FieldReader) {
 
 type DeleteSpecialtyArgsList []*DeleteSpecialtyArgs
 
-func (s *DeleteSpecialtyArgsList) Schema() []model.Field { return nil }
-func (s *DeleteSpecialtyArgsList) Pointers() []any     { return nil }
 func (s *DeleteSpecialtyArgsList) Len() int             { return len(*s) }
 func (s *DeleteSpecialtyArgsList) At(i int) model.Fielder { return (*s)[i] }
 func (s *DeleteSpecialtyArgsList) Append() model.Fielder  { v := &DeleteSpecialtyArgs{}; *s = append(*s, v); return v }
